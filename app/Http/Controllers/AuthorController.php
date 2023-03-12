@@ -50,7 +50,11 @@ class AuthorController extends Controller
     // handle insert a new author ajax request
     public function storeAuthor(Request $request) {
 
-
+        $request->validate([
+            'AuthorLastName' => 'required|string|min:3',
+            'AuthorFirstName' => 'required|string',
+            'AuthorMiddleName' => 'nullable|string',
+        ]);
         $AuthData = ['last_name' => $request->AuthorLastName, 'first_name' => $request->AuthorFirstName, 'middle_name' => $request->AuthorMiddleName];
         Author::create($AuthData);
         return response()->json([

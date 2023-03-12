@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="my-2">
                             <label for="title_book">Title book</label>
-                            <input type="text" name="title_book" class="form-control" placeholder="Title_book" >
+                            <input type="text" name="title_book" class="form-control" placeholder="Title_book" required>
                         </div>
                         <div class="my-2">
                             <label for="description_book">Description</label>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="my-2">
                             <label for="author_book">Author</label>
-                            <input type="text" name="author_book" id="add_author_book" class="form-control" placeholder="" >
+                            <input type="text" name="author_book" id="add_author_book" class="form-control" placeholder=""  readonly>
                             <div class="form-inline">
                                 <div class="form-group">
                                     <select class="form-select" id="authors-select" size="3" aria-label="size 3 select example">
@@ -48,7 +48,7 @@
 
                         <div class="my-2">
                             <label for="published_date">Published Date</label>
-                            <input type="date" name="published_date" class="form-control" placeholder="Published Date" >
+                            <input type="date" name="published_date" class="form-control" placeholder="Published Date" required>
                         </div>
 
                         <div class="my-2">
@@ -89,12 +89,12 @@
                         </div>
                         <div class="col-lg">
                             <label for="description_book">Description</label>
-                            <input type="text" name="description_book" id="description_book" class="form-control" placeholder="Description" required>
+                            <input type="text" name="description_book" id="description_book" class="form-control" placeholder="Description" >
                         </div>
                     </div>
                     <div class="my-2">
                         <label for="author_book">Author</label>
-                        <input type="text" name="author_book" id="author_book" class="form-control" placeholder="Description" >
+                        <input type="text" name="author_book" id="author_book" class="form-control" placeholder="Description" required>
                     </div>
                     <div class="my-2">
                         <label for="published_date">Published Date</label>

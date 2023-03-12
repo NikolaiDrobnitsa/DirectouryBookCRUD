@@ -28,16 +28,19 @@
                     <div class="row">
                         <div class="col-lg">
                             <label for="AuthorLastName">Last Name</label>
-                            <input type="text" name="AuthorLastName" class="form-control" placeholder="Last Name" required >
+                            <input type="text" name="AuthorLastName" class="form-control" placeholder="Last Name"  required min="3">
+
                         </div>
                         <div class="col-lg">
                             <label for="AuthorFirstName">First Name</label>
                             <input type="text" name="AuthorFirstName"  class="form-control" placeholder="First Name" required>
+
                         </div>
                     </div>
                     <div class="my-2">
                         <label for="AuthorMiddleName">Middle Name</label>
                         <input type="text" name="AuthorMiddleName" class="form-control" placeholder="Middle Name">
+
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -33,9 +33,17 @@ class BookController extends Controller
             </thead>
             <tbody>';
             foreach ($books as $book) {
+
+                $avatar_path = 'storage/images/' . $book->book_avatars;
+                if (!file_exists($avatar_path)) {
+                    $avatar_path = 'storage/images/default.png';
+                }
+
+
                 $output .= '<tr>
                 <td>' . $book->id . '</td>
-                <td><img src="storage/images/' . $book->book_avatars . '" width="50" class="img-thumbnail" alt="" "></td>
+
+                <td><img src="' . $avatar_path . '" width="50" class="img-thumbnail" alt="" "></td>
                 <td>' . $book->title .'</td>
                 <td>' . $book->description . '</td>
                 <td>' . $book->author . '</td>
@@ -56,28 +64,26 @@ class BookController extends Controller
 
     // handle insert a new employee ajax request
     public function store(Request $request) {
-//        if (!$request->hasFile('image')) {
-//            return response()->json([
-//                'status' => 'error',
-//                'message' => 'Не удалось загрузить изображение'
-//            ], 400);
-//        }
-//        $file = $request->file('image');
-//
-//        // Проверяем, был ли загружен файл с ошибкой
-//        if (!$file->isValid()) {
-//            return response()->json([
-//                'status' => 'error',
-//                'message' => 'Ошибка при загрузке изображения'
-//            ], 400);
-//        }
+        $request->validate([
+            'title_book' => 'required|string',
+            'description_book' => 'nullable|string',
+            'fileName' => 'image|mimes:png,jpg|max:2048',
+            'author_book' => 'string',
+            'published_date' => 'required|date'
+        ]);
 
 
 
+        if ($request->hasFile('book_avatars')) {
+            $file = $request->file('book_avatars');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/images', $fileName);
 
-        $file = $request->file('book_avatars');
-        $fileName = time() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('public/images', $fileName);
+
+        }
+        else{
+            $fileName = "default.png";
+        }
 
         $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName, 'author' => $request->author_book, 'published_date' => $request->published_date];
         Book::create($bookData);
@@ -103,7 +109,9 @@ class BookController extends Controller
             $fileName = time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/images', $fileName);
             if ($book->book_avatars) {
-                Storage::delete('public/images/' . $book->book_avatars);
+                if ($book->book_avatars != "default.png") {
+                    Storage::delete('public/images/' . $book->book_avatars);
+                }
             }
         } else {
             $fileName = $request->book_avatar;
