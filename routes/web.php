@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,9 @@ Route::get('/edit', [BookController::class, 'edit'])->name('edit');
 Route::post('/update', [BookController::class, 'update'])->name('update');
 Route::get('/fetchauthors', [BookController::class, 'fetchauthors'])->name('fetchauthors');;
 
+Route::get('/Author', [AuthorController::class, 'indexAuthor']);
+Route::post('/storeAuthor', [AuthorController::class, 'storeAuthor'])->name('storeAuthor');
+Route::get('/fetchallAuthor', [AuthorController::class, 'fetchAllAuthor'])->name('fetchAllAuthor');
+Route::delete('/deleteAuthor', [AuthorController::class, 'deleteAuthor'])->name('deleteAuthor');
+Route::get('/editAuthor', [AuthorController::class, 'editAuthor'])->name('editAuthor');
+Route::post('/updateAuthor', [AuthorController::class, 'updateAuthor'])->name('updateAuthor');
