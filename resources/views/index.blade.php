@@ -32,12 +32,21 @@
                         </div>
                         <div class="my-2">
                             <label for="description_book">Description</label>
+
                             <input type="text" name="description_book" class="form-control" placeholder="Description" >
                         </div>
-                        <div class="my-2">
+                        <div class="col-lg">
                             <label for="author">Author</label>
-                            <input type="text" name="author" class="form-control" placeholder="Description" >
+                            <input type="text" name="author" class="form-control" placeholder="" >
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <select class="form-select" id="products-select" size="3" aria-label="size 3 select example">
+                                    </select>
+                                </div>
+                                <a type="button" id="add-author-btn" class="btn btn-primary">Добавить ещё одного автора</a>
+                            </div>
                         </div>
+
                         <div class="my-2">
                             <label for="published_date">Published Date</label>
                             <input type="date" name="published_date" class="form-control" placeholder="Published Date" >
@@ -108,7 +117,10 @@
         </div>
     </div>
 </div>
-{{-- edit employee modal end --}}
+{{-- edit book modal end --}}
+
+
+
 
 <body class="bg-light">
 <div class="container">
@@ -133,10 +145,12 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(function() {
-
+        fetchAllAuthors();
         // add new book ajax request
         $("#add_book_form").submit(function(e) {
             console.log("start in add");
+
+            console.log("end in add");
             e.preventDefault();
             const fd = new FormData(this);
             $("#add_book_btn").text('Adding...');
@@ -274,6 +288,21 @@
                     $("table").DataTable({
                         order: [0, 'desc']
                     });
+                }
+            });
+        }
+        function fetchAllAuthors() {
+            $.ajax({
+                type: "GET",
+                url: "/fetchauthors",
+                success: function(data) {
+                    // добавление опций в тег select
+                    data.forEach(function(author) {
+                        $("#products-select").append("<option value='" + author.id + "'>" + author.first_name +" " + author.last_name + "</option>");
+                    });
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.log("Ошибка запроса: " + errorThrown);
                 }
             });
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -150,5 +151,11 @@ class BookController extends Controller
         if (Storage::delete('public/images/' . $book->book_avatars)) {
             Book::destroy($id);
         }
+    }
+
+    public function fetchauthors()
+    {
+        $authors = Author::all();
+        return response()->json($authors);
     }
 }
