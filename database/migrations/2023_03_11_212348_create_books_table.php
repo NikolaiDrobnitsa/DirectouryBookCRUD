@@ -15,10 +15,10 @@ return new class extends Migration
             Schema::create('books', function (Blueprint $table) {
                 $table->id();
                 $table->string('title');
-                $table->text('description')->nullable();
-                $table->string('image')->nullable();
-                $table->unsignedBigInteger('author_id');
-                $table->date('published_date');
+                $table->string('description')->nullable();
+                $table->string('book_avatars')->nullable();
+                $table->unsignedBigInteger('author_id')->nullable();
+                $table->string('published_date')->nullable();
                 $table->timestamps();
 
                 $table->foreign('author_id')->references('id')->on('authors');

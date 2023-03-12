@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
 class BookController extends Controller
 {
     // set index page view
@@ -13,7 +13,7 @@ class BookController extends Controller
         return view('index');
     }
 
-    // handle fetch all eamployees ajax request
+    // handle fetch all books ajax request
     public function fetchAll() {
         $books = Book::all();
         $output = '';
@@ -25,6 +25,7 @@ class BookController extends Controller
                 <th>Image</th>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Author</th>
                 <th>Date</th>
                 <th>Action</th>
               </tr>
@@ -33,12 +34,13 @@ class BookController extends Controller
             foreach ($books as $book) {
                 $output .= '<tr>
                 <td>' . $book->id . '</td>
-                <td><img src="storage/images/' . $book->image . '" width="50" class="img-thumbnail" alt="" "></td>
+                <td><img src="storage/images/' . $book->book_avatars . '" width="50" class="img-thumbnail" alt="" "></td>
                 <td>' . $book->title .'</td>
                 <td>' . $book->description . '</td>
+                <td>' . $book->author_id . '</td>
                 <td>' . $book->published_date . '</td>
                 <td>
-                  <a href="#" id="' . $book->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editEmployeeModal"><i class="bi-pencil-square h4"></i></a>
+                  <a href="#" id="' . $book->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editBookModal"><i class="bi-pencil-square h4"></i></a>
 
                   <a href="#" id="' . $book->id . '" class="text-danger mx-1 deleteIcon"><i class="bi-trash h4"></i></a>
                 </td>
@@ -53,15 +55,62 @@ class BookController extends Controller
 
     // handle insert a new employee ajax request
     public function store(Request $request) {
-        $file = $request->file('image');
+//        if (!$request->hasFile('image')) {
+//            return response()->json([
+//                'status' => 'error',
+//                'message' => 'Не удалось загрузить изображение'
+//            ], 400);
+//        }
+//        $file = $request->file('image');
+//
+//        // Проверяем, был ли загружен файл с ошибкой
+//        if (!$file->isValid()) {
+//            return response()->json([
+//                'status' => 'error',
+//                'message' => 'Ошибка при загрузке изображения'
+//            ], 400);
+//        }
+
+
+
+
+        $file = $request->file('book_avatars');
         $fileName = time() . '.' . $file->getClientOriginalExtension();
         $file->storeAs('public/images', $fileName);
 
-        $bookData = ['title' => $request->title, 'description' => $request->description, 'published_date' => $request->published_date, 'image' => $fileName];
+        $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName,'author_id' => $request->author_id, 'published_date' => $request->published_date];
         Book::create($bookData);
         return response()->json([
             'status' => 200,
         ]);
+
+//        try {
+//            if ($request->hasFile('image')) {
+//                $file = $request->file('image');
+//                $fileName = time() . '.' . $file->getClientOriginalExtension();
+//                $file->storeAs('public/images', $fileName);
+//            } else {
+//                throw new Exception('No image was uploaded');
+//            }
+//
+//            $bookData = [
+//                'title' => $request->title,
+//                'description' => $request->description,
+//                'image' => $fileName,
+//                'author_id' => $request->author_id,
+//                'published_date' => $request->published_date
+//            ];
+//            Book::create($bookData);
+//
+//            return response()->json([
+//                'status' => 200,
+//            ]);
+//        } catch (Exception $e) {
+//            return response()->json([
+//                'status' => 500,
+//                'message' => $e->getMessage()
+//            ]);
+//        }
     }
 
     // handle edit an employee ajax request
@@ -75,18 +124,18 @@ class BookController extends Controller
     public function update(Request $request) {
         $fileName = '';
         $book = Book::find($request->book_id);
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
+        if ($request->hasFile('book_avatars')) {
+            $file = $request->file('book_avatars');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/images', $fileName);
-            if ($book->image) {
-                Storage::delete('public/images/' . $book->image);
+            if ($book->book_avatars) {
+                Storage::delete('public/images/' . $book->book_avatars);
             }
         } else {
-            $fileName = $request->book_image;
+            $fileName = $request->book_avatar;
         }
 
-        $bookData = ['title' => $request->title, 'description' => $request->description, 'published_date' => $request->published_date, 'image' => $fileName];
+        $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName,'author_id' => $request->author_id, 'published_date' => $request->published_date];
 
         $book->update($bookData);
         return response()->json([
@@ -98,7 +147,7 @@ class BookController extends Controller
     public function delete(Request $request) {
         $id = $request->id;
         $book = Book::find($id);
-        if (Storage::delete('public/images/' . $book->image)) {
+        if (Storage::delete('public/images/' . $book->book_avatars)) {
             Book::destroy($id);
         }
     }

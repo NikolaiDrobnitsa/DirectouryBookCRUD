@@ -28,21 +28,25 @@
                     <div class="row">
                         <div class="col-lg">
                             <label for="title_book">Title book</label>
-                            <input type="text" name="title_book" class="form-control" placeholder="Title_book" required>
+                            <input type="text" name="title_book" class="form-control" placeholder="Title_book" >
                         </div>
                         <div class="col-lg">
                             <label for="description_book">Description</label>
-                            <input type="text" name="description_book" class="form-control" placeholder="Description" required>
+                            <input type="text" name="description_book" class="form-control" placeholder="Description" >
+                        </div>
+                        <div class="col-lg">
+                            <label for="author_book">Author</label>
+                            <input type="text" name="author_book" class="form-control" placeholder="Description" >
                         </div>
                     </div>
                     <div class="my-2">
                         <label for="published_date">Published Date</label>
-                        <input type="date" name="published_date" class="form-control" placeholder="Published Date" required>
+                        <input type="text" name="published_date" class="form-control" placeholder="Published Date" >
                     </div>
 
                     <div class="my-2">
-                        <label for="image">Select Image</label>
-                        <input type="file" name="image" class="form-control" required>
+                        <label for="book_avatars">Select Image</label>
+                        <input type="file" name="book_avatars" class="form-control" >
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -84,10 +88,10 @@
                         <input type="date" name="published_date" id="published_date" class="form-control" placeholder="Published Date" required>
                     </div>
                     <div class="my-2">
-                        <label for="image">Select Image</label>
-                        <input type="file" name="image" class="form-control">
+                        <label for="book_avatars">Select Image</label>
+                        <input type="file" name="book_avatars" class="form-control">
                     </div>
-                    <div class="mt-2" id="image">
+                    <div class="mt-2" id="book_avatars">
 
                     </div>
                 </div>
@@ -127,6 +131,7 @@
 
         // add new book ajax request
         $("#add_book_form").submit(function(e) {
+            console.log("start in add");
             e.preventDefault();
             const fd = new FormData(this);
             $("#add_book_btn").text('Adding...');
@@ -147,9 +152,18 @@
                         )
                         fetchAllBooks();
                     }
+
+
                     $("#add_book_btn").text('Add Book');
                     $("#add_book_form")[0].reset();
                     $("#addBookModal").modal('hide');
+                },
+                error: function (xhr, status, error){
+                    // console.log("end in add");
+                    // // console.log(JSON.stringify(response));
+                    // console.log();
+                    // console.table(response);
+                    console.log(xhr.responseText);
                 }
             });
         });
@@ -169,10 +183,10 @@
                     console.table($("#title_book").val(response.title));
                     $("#description_book").val(response.description);
                     $("#published_date").val(response.published_date);
-                    $("#image").html(
-                        `<img src="storage/images/${response.image}" width="100" class="img-fluid img-thumbnail">`);
+                    $("#book_avatars").html(
+                        `<img src="storage/images/${response.book_avatars}" width="100" class="img-fluid img-thumbnail">`);
                     $("#book_id").val(response.id);
-                    $("#book_image").val(response.image);
+                    $("#book_image").val(response.book_avatars);
                 }
             });
         });
