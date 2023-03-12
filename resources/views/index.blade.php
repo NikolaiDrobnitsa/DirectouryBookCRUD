@@ -32,15 +32,14 @@
                         </div>
                         <div class="my-2">
                             <label for="description_book">Description</label>
-
                             <input type="text" name="description_book" class="form-control" placeholder="Description" >
                         </div>
-                        <div class="col-lg">
-                            <label for="author">Author</label>
-                            <input type="text" name="author" class="form-control" placeholder="" >
+                        <div class="my-2">
+                            <label for="author_book">Author</label>
+                            <input type="text" name="author_book" class="form-control" placeholder="" >
                             <div class="form-inline">
                                 <div class="form-group">
-                                    <select class="form-select" id="products-select" size="3" aria-label="size 3 select example">
+                                    <select class="form-select" id="authors-select" size="3" aria-label="size 3 select example">
                                     </select>
                                 </div>
                                 <a type="button" id="add-author-btn" class="btn btn-primary">Добавить ещё одного автора</a>
@@ -94,8 +93,8 @@
                         </div>
                     </div>
                     <div class="my-2">
-                        <label for="author">Author</label>
-                        <input type="text" name="author" class="form-control" placeholder="Description" >
+                        <label for="author_book">Author</label>
+                        <input type="text" name="author_book" id="author_book" class="form-control" placeholder="Description" >
                     </div>
                     <div class="my-2">
                         <label for="published_date">Published Date</label>
@@ -145,7 +144,7 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(function() {
-        fetchAllAuthors();
+
         // add new book ajax request
         $("#add_book_form").submit(function(e) {
             console.log("start in add");
@@ -170,6 +169,8 @@
                             'success'
                         )
                         fetchAllBooks();
+                        fetchAllAuthors();
+                        newNameAuthor = "";
                     }
 
 
@@ -199,14 +200,14 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    console.table($("#title_book").val(response.title));
+                    $("#title_book").val(response.title);
                     $("#description_book").val(response.description);
                     $("#published_date").val(response.published_date);
-                    $("#").val(response.published_date);
+                    $("#author_book").val(response.author);
                     $("#book_avatars").html(
                         `<img src="storage/images/${response.book_avatars}" width="100" class="img-fluid img-thumbnail">`);
                     $("#book_id").val(response.id);
-                    $("#book_image").val(response.book_avatars);
+                    $("#book_avatar").val(response.book_avatars);
                 }
             });
         });
@@ -232,10 +233,12 @@
                             'success'
                         )
                         fetchAllBooks();
+
                     }
                     $("#edit_book_btn").text('Update Book');
                     $("#edit_book_form")[0].reset();
                     $("#editBookModal").modal('hide');
+
                 }
             });
         });
@@ -278,7 +281,7 @@
 
         // fetch all books ajax request
         fetchAllBooks();
-
+        fetchAllAuthors();
         function fetchAllBooks() {
             $.ajax({
                 url: '{{ route('fetchAll') }}',
@@ -292,13 +295,14 @@
             });
         }
         function fetchAllAuthors() {
+            // $("#authors-select").empty();
             $.ajax({
                 type: "GET",
                 url: "/fetchauthors",
                 success: function(data) {
                     // добавление опций в тег select
                     data.forEach(function(author) {
-                        $("#products-select").append("<option value='" + author.id + "'>" + author.first_name +" " + author.last_name + "</option>");
+                        $("#authors-select").append("<option value='" + author.id + "'>" + author.first_name +" " + author.last_name + "</option>");
                     });
                 },
                 error: function(xhr, textStatus, errorThrown) {
@@ -306,6 +310,31 @@
                 }
             });
         }
+        let newNameAuthor = "";
+        $("#add-author-btn").click(function() {
+            console.log("start")
+            let selectedAuthorId = $("#authors-select").val();
+            console.log(selectedAuthorId);
+            let selectedAuthorName = $("#authors-select option:selected").text();
+            console.log(selectedAuthorName);
+
+            $("#authors-select");
+            if (selectedAuthorId && selectedAuthorName) {
+                if(newNameAuthor.length > 0){
+                    newNameAuthor = newNameAuthor + ", " +selectedAuthorName ;
+                }
+                else {
+                    newNameAuthor = newNameAuthor + selectedAuthorName ;
+                }
+
+
+                console.log(newNameAuthor.toString());
+                // добавление продукта в список выбранных
+                // $("#author_input").append("<li>" + selectedProductName + "</li>");
+                $("#author_book").val(newNameAuthor);
+            }
+            $("#authors-select option:selected").remove();
+        });
     });
 </script>
 </body>

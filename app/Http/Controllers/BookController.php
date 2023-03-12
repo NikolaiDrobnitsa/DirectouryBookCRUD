@@ -79,7 +79,7 @@ class BookController extends Controller
         $fileName = time() . '.' . $file->getClientOriginalExtension();
         $file->storeAs('public/images', $fileName);
 
-        $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName,'author' => $request->author, 'published_date' => $request->published_date];
+        $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName, 'author' => $request->author_book, 'published_date' => $request->published_date];
         Book::create($bookData);
         return response()->json([
             'status' => 200,
@@ -136,7 +136,7 @@ class BookController extends Controller
             $fileName = $request->book_avatar;
         }
 
-        $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName,'author' => $request->author, 'published_date' => $request->published_date];
+        $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName, 'author' => $request->author_book, 'published_date' => $request->published_date];
 
         $book->update($bookData);
         return response()->json([

@@ -12,7 +12,7 @@ class Book extends Model
         'title',
         'description',
         'book_avatars',
-        'author_id',
+        'author',
         'published_date',
     ];
     public function author(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
