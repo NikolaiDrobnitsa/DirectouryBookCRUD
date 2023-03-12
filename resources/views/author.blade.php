@@ -149,7 +149,6 @@
         $(document).on('click', '.editIcon', function(e) {
             e.preventDefault();
             let id = $(this).attr('id');
-            alert("edit in");
             $.ajax({
                 url: '{{ route('editAuthor') }}',
                 method: 'get',
