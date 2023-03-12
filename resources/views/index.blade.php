@@ -128,7 +128,7 @@
             <div class="card shadow">
                 <div class="card-header bg-success d-flex justify-content-between align-items-center">
                     <h3 class="text-light">Booking Directory Books</h3>
-                    <a href="/Author" class="btn btn-light" >Authors</a>
+                    <a href="/Author" class="btn btn-light" >Authors Directorys</a>
                     <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addBookModal"><i
                             class="bi-plus-circle me-2"></i>Add New Book</button>
                 </div>
