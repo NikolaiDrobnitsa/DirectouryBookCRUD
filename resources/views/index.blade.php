@@ -182,7 +182,7 @@
             });
         });
 
-        // edit employee ajax request
+        // edit book ajax request
         $(document).on('click', '.editIcon', function(e) {
             e.preventDefault();
             let id = $(this).attr('id');
@@ -237,7 +237,7 @@
             });
         });
 
-        // delete employee ajax request
+        // delete book ajax request
         $(document).on('click', '.deleteIcon', function(e) {
             e.preventDefault();
             let id = $(this).attr('id');

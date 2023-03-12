@@ -47,7 +47,7 @@ class AuthorController extends Controller
         }
     }
 
-    // handle insert a new employee ajax request
+    // handle insert a new author ajax request
     public function storeAuthor(Request $request) {
 
 
@@ -58,26 +58,26 @@ class AuthorController extends Controller
         ]);
     }
 
-    // handle edit an employee ajax request
+    // handle edit an author ajax request
     public function editAuthor(Request $request) {
         $id = $request->id;
         $author = Author::find($id);
         return response()->json($author);
     }
 
-    // handle update an employee ajax request
+    // handle update an author ajax request
     public function updateAuthor(Request $request) {
         $author = Author::find($request->auth_id);
 
       $AuthData = ['last_name' => $request->AuthorLastName, 'first_name' => $request->AuthorFirstName, 'middle_name' => $request->AuthorMiddleName];
-//        $AuthData = ['last_name' => $request->surname, 'first_name' => $request->name, 'middle_name' => $request->parental];
+
         $author->update($AuthData);
         return response()->json([
             'status' => 200,
         ]);
     }
 
-    // handle delete an employee ajax request
+    // handle delete an author ajax request
     public function deleteAuthor(Request $request) {
         $id = $request->id;
         Author::destroy($id);

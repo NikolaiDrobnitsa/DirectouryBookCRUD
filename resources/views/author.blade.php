@@ -24,7 +24,6 @@
             </div>
             <form action="#" method="POST" id="add_author_form" enctype="multipart/form-data">
                 @csrf
-{{--                <input type="hidden" name="auth_id" id="auth_id">--}}
                 <div class="modal-body p-4 bg-light">
                     <div class="row">
                         <div class="col-lg">
@@ -120,7 +119,6 @@
             $("#add_author_btn").text('Adding...');
             $.ajax({
                 url: '{{ route('storeAuthor') }}',
-                {{--url: '{{ route('updateAuthor') }}',--}}
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -156,12 +154,8 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    alert("good");
-                    console.table($("#AuthorLastName").val(response.last_name));
                     $("#AuthorFirstName").val(response.first_name);
-                    console.table($("#AuthorMiddleName").val(response.middle_name));
                     $("#auth_id").val(response.id);
-                    console.log(JSON.stringify(response));
 
                 },
                 error: function(){
@@ -174,12 +168,10 @@
         // update author ajax request
         $("#edit_author_form").submit(function(e) {
             e.preventDefault();
-            alert("update in");
             const fd = new FormData(this);
             $("#edit_author_btn").text('Updating...');
             $.ajax({
                 url: '{{ route('updateAuthor') }}',
-                {{--url: '{{ route('storeAuthor') }}',--}}
                 method: 'post',
                 data: fd,
                 cache: false,
@@ -201,7 +193,6 @@
                     $("#editAuthorModal").modal('hide');
                 },
                 error: function(){
-                    alert('error update!');
                 }
             });
         });
@@ -229,7 +220,6 @@
                             _token: csrf
                         },
                         success: function(response) {
-                            console.log(response);
                             Swal.fire(
                                 'Deleted!',
                                 'Your file has been deleted.',
