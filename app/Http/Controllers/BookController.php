@@ -85,33 +85,6 @@ class BookController extends Controller
             'status' => 200,
         ]);
 
-//        try {
-//            if ($request->hasFile('image')) {
-//                $file = $request->file('image');
-//                $fileName = time() . '.' . $file->getClientOriginalExtension();
-//                $file->storeAs('public/images', $fileName);
-//            } else {
-//                throw new Exception('No image was uploaded');
-//            }
-//
-//            $bookData = [
-//                'title' => $request->title,
-//                'description' => $request->description,
-//                'image' => $fileName,
-//                'author_id' => $request->author_id,
-//                'published_date' => $request->published_date
-//            ];
-//            Book::create($bookData);
-//
-//            return response()->json([
-//                'status' => 200,
-//            ]);
-//        } catch (Exception $e) {
-//            return response()->json([
-//                'status' => 500,
-//                'message' => $e->getMessage()
-//            ]);
-//        }
     }
 
     // handle edit an employee ajax request

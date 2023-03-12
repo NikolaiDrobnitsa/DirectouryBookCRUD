@@ -36,7 +36,7 @@
                         </div>
                         <div class="my-2">
                             <label for="author_book">Author</label>
-                            <input type="text" name="author_book" class="form-control" placeholder="" >
+                            <input type="text" name="author_book" id="add_author_book" class="form-control" placeholder="" >
                             <div class="form-inline">
                                 <div class="form-group">
                                     <select class="form-select" id="authors-select" size="3" aria-label="size 3 select example">
@@ -126,8 +126,9 @@
     <div class="row my-5">
         <div class="col-lg-12">
             <div class="card shadow">
-                <div class="card-header bg-danger d-flex justify-content-between align-items-center">
-                    <h3 class="text-light">Manage Books</h3>
+                <div class="card-header bg-success d-flex justify-content-between align-items-center">
+                    <h3 class="text-light">Booking Directory Books</h3>
+                    <a href="/" class="btn btn-light" >Authors</a>
                     <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addBookModal"><i
                             class="bi-plus-circle me-2"></i>Add New Book</button>
                 </div>
@@ -147,9 +148,6 @@
 
         // add new book ajax request
         $("#add_book_form").submit(function(e) {
-            console.log("start in add");
-
-            console.log("end in add");
             e.preventDefault();
             const fd = new FormData(this);
             $("#add_book_btn").text('Adding...');
@@ -179,10 +177,6 @@
                     $("#addBookModal").modal('hide');
                 },
                 error: function (xhr, status, error){
-                    // console.log("end in add");
-                    // // console.log(JSON.stringify(response));
-                    // console.log();
-                    // console.table(response);
                     console.log(xhr.responseText);
                 }
             });
@@ -205,7 +199,7 @@
                     $("#published_date").val(response.published_date);
                     $("#author_book").val(response.author);
                     $("#book_avatars").html(
-                        `<img src="storage/images/${response.book_avatars}" width="100" class="img-fluid img-thumbnail">`);
+                        `<img src="storage/images/${response.book_avatars}" width="200"  class="img-fluid img-thumbnail">`);
                     $("#book_id").val(response.id);
                     $("#book_avatar").val(response.book_avatars);
                 }
@@ -266,7 +260,6 @@
                             _token: csrf
                         },
                         success: function(response) {
-                            console.log(response);
                             Swal.fire(
                                 'Deleted!',
                                 'Your file has been deleted.',
@@ -295,12 +288,10 @@
             });
         }
         function fetchAllAuthors() {
-            // $("#authors-select").empty();
             $.ajax({
                 type: "GET",
                 url: "/fetchauthors",
                 success: function(data) {
-                    // добавление опций в тег select
                     data.forEach(function(author) {
                         $("#authors-select").append("<option value='" + author.id + "'>" + author.first_name +" " + author.last_name + "</option>");
                     });
@@ -312,11 +303,8 @@
         }
         let newNameAuthor = "";
         $("#add-author-btn").click(function() {
-            console.log("start")
             let selectedAuthorId = $("#authors-select").val();
-            console.log(selectedAuthorId);
             let selectedAuthorName = $("#authors-select option:selected").text();
-            console.log(selectedAuthorName);
 
             $("#authors-select");
             if (selectedAuthorId && selectedAuthorName) {
@@ -328,10 +316,7 @@
                 }
 
 
-                console.log(newNameAuthor.toString());
-                // добавление продукта в список выбранных
-                // $("#author_input").append("<li>" + selectedProductName + "</li>");
-                $("#author_book").val(newNameAuthor);
+                $("#add_author_book").val(newNameAuthor);
             }
             $("#authors-select option:selected").remove();
         });
