@@ -37,7 +37,7 @@ class BookController extends Controller
                 <td><img src="storage/images/' . $book->book_avatars . '" width="50" class="img-thumbnail" alt="" "></td>
                 <td>' . $book->title .'</td>
                 <td>' . $book->description . '</td>
-                <td>' . $book->author_id . '</td>
+                <td>' . $book->author . '</td>
                 <td>' . $book->published_date . '</td>
                 <td>
                   <a href="#" id="' . $book->id . '" class="text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editBookModal"><i class="bi-pencil-square h4"></i></a>
@@ -78,7 +78,7 @@ class BookController extends Controller
         $fileName = time() . '.' . $file->getClientOriginalExtension();
         $file->storeAs('public/images', $fileName);
 
-        $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName,'author_id' => $request->author_id, 'published_date' => $request->published_date];
+        $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName,'author' => $request->author, 'published_date' => $request->published_date];
         Book::create($bookData);
         return response()->json([
             'status' => 200,
@@ -135,7 +135,7 @@ class BookController extends Controller
             $fileName = $request->book_avatar;
         }
 
-        $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName,'author_id' => $request->author_id, 'published_date' => $request->published_date];
+        $bookData = ['title' => $request->title_book, 'description' => $request->description_book, 'book_avatars' => $fileName,'author' => $request->author, 'published_date' => $request->published_date];
 
         $book->update($bookData);
         return response()->json([

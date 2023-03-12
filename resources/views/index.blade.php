@@ -26,28 +26,29 @@
                 @csrf
                 <div class="modal-body p-4 bg-light">
                     <div class="row">
-                        <div class="col-lg">
+                        <div class="my-2">
                             <label for="title_book">Title book</label>
                             <input type="text" name="title_book" class="form-control" placeholder="Title_book" >
                         </div>
-                        <div class="col-lg">
+                        <div class="my-2">
                             <label for="description_book">Description</label>
                             <input type="text" name="description_book" class="form-control" placeholder="Description" >
                         </div>
-                        <div class="col-lg">
-                            <label for="author_book">Author</label>
-                            <input type="text" name="author_book" class="form-control" placeholder="Description" >
+                        <div class="my-2">
+                            <label for="author">Author</label>
+                            <input type="text" name="author" class="form-control" placeholder="Description" >
+                        </div>
+                        <div class="my-2">
+                            <label for="published_date">Published Date</label>
+                            <input type="date" name="published_date" class="form-control" placeholder="Published Date" >
+                        </div>
+
+                        <div class="my-2">
+                            <label for="book_avatars">Select Image</label>
+                            <input type="file" name="book_avatars" class="form-control" >
                         </div>
                     </div>
-                    <div class="my-2">
-                        <label for="published_date">Published Date</label>
-                        <input type="text" name="published_date" class="form-control" placeholder="Published Date" >
-                    </div>
 
-                    <div class="my-2">
-                        <label for="book_avatars">Select Image</label>
-                        <input type="file" name="book_avatars" class="form-control" >
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -82,6 +83,10 @@
                             <label for="description_book">Description</label>
                             <input type="text" name="description_book" id="description_book" class="form-control" placeholder="Description" required>
                         </div>
+                    </div>
+                    <div class="my-2">
+                        <label for="author">Author</label>
+                        <input type="text" name="author" class="form-control" placeholder="Description" >
                     </div>
                     <div class="my-2">
                         <label for="published_date">Published Date</label>
@@ -183,6 +188,7 @@
                     console.table($("#title_book").val(response.title));
                     $("#description_book").val(response.description);
                     $("#published_date").val(response.published_date);
+                    $("#").val(response.published_date);
                     $("#book_avatars").html(
                         `<img src="storage/images/${response.book_avatars}" width="100" class="img-fluid img-thumbnail">`);
                     $("#book_id").val(response.id);
