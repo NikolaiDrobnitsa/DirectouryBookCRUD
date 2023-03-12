@@ -16,9 +16,9 @@ return new class extends Migration
                 $table->id();
                 $table->string('title');
                 $table->string('description')->nullable();
-                $table->string('book_avatars')->nullable();
-                $table->string('author')->nullable();
-                $table->date('published_date')->nullable();
+                $table->string('book_avatars')->default('default.png');
+                $table->string('author');
+                $table->date('published_date');
                 $table->timestamps();
 
 //                $table->foreign('author_id')->references('id')->on('authors');

@@ -62,7 +62,7 @@ class BookController extends Controller
         }
     }
 
-    // handle insert a new employee ajax request
+    // handle insert a new book ajax request
     public function store(Request $request) {
         $request->validate([
             'title_book' => 'required|string',
@@ -78,8 +78,6 @@ class BookController extends Controller
             $file = $request->file('book_avatars');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/images', $fileName);
-
-
         }
         else{
             $fileName = "default.png";
@@ -93,14 +91,14 @@ class BookController extends Controller
 
     }
 
-    // handle edit an employee ajax request
+    // handle edit a book ajax request
     public function edit(Request $request) {
         $id = $request->id;
         $book = Book::find($id);
         return response()->json($book);
     }
 
-    // handle update an employee ajax request
+    // handle update a book ajax request
     public function update(Request $request) {
         $fileName = '';
         $book = Book::find($request->book_id);
@@ -125,7 +123,7 @@ class BookController extends Controller
         ]);
     }
 
-    // handle delete an employee ajax request
+    // handle delete a book ajax request
     public function delete(Request $request) {
         $id = $request->id;
         $book = Book::find($id);
